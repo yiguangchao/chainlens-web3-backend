@@ -1,0 +1,8 @@
+target/
+.m2/
+*.log
+.idea/
+.vscode/
+*.iml
+.DS_Store
+docker-compose.override.yml

@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: chainlens-web3-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/chainlens}
+    username: ${SPRING_DATASOURCE_USERNAME:chainlens}
+    password: ${SPRING_DATASOURCE_PASSWORD:chainlens}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+
+chainlens:
+  indexer:
+    mode: ${CHAINLENS_INDEXER_MODE:mock}
+  chains:
+    - chain-id: 11155111
+      chain-name: Ethereum Sepolia
+      rpc-url: ${ETHEREUM_SEPOLIA_RPC_URL:https://rpc.sepolia.org}
+      native-symbol: ETH
+      explorer-url: https://sepolia.etherscan.io
+      enabled: true
+    - chain-id: 97
+      chain-name: BSC Testnet
+      rpc-url: ${BSC_TESTNET_RPC_URL:https://data-seed-prebsc-1-s1.binance.org:8545}
+      native-symbol: BNB
+      explorer-url: https://testnet.bscscan.com
+      enabled: true
+    - chain-id: 80002
+      chain-name: Polygon Amoy
+      rpc-url: ${POLYGON_AMOY_RPC_URL:https://rpc-amoy.polygon.technology}
+      native-symbol: POL
+      explorer-url: https://amoy.polygonscan.com
+      enabled: true

@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: chainlens-postgres
+    environment:
+      POSTGRES_DB: chainlens
+      POSTGRES_USER: chainlens
+      POSTGRES_PASSWORD: chainlens
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chainlens -d chainlens"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: chainlens-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  chainlens-web3-backend:
+    build: .
+    container_name: chainlens-web3-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/chainlens
+      SPRING_DATASOURCE_USERNAME: chainlens
+      SPRING_DATASOURCE_PASSWORD: chainlens
+      SPRING_DATA_REDIS_HOST: redis
+      CHAINLENS_INDEXER_MODE: mock
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:

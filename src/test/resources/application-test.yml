@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:chainlens;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+chainlens:
+  indexer:
+    mode: mock
+  chains:
+    - chain-id: 11155111
+      chain-name: Ethereum Sepolia
+      rpc-url: https://rpc.sepolia.org
+      native-symbol: ETH
+      explorer-url: https://sepolia.etherscan.io
+      enabled: true
