@@ -24,8 +24,8 @@ It is designed as a GitHub portfolio project for Web3 Backend Engineer, Wallet B
 - Wallet address management with label, remark, and risk level fields
 - Built-in chain configuration for Ethereum Sepolia, BSC Testnet, and Polygon Amoy
 - Transaction indexer with default mock mode and optional RPC mode
-- Native token transaction parsing in RPC mode
-- ERC20 `Transfer(address,address,uint256)` topic parser
+- Native token transaction parsing in RPC mode, using transaction value and receipt gas/status
+- ERC20 `Transfer(address,address,uint256)` log parsing in RPC mode, using receipt logs and real `logIndex`
 - Transaction query by txHash, wallet address, chainId, and risk level
 - Risk engine for large transfers, blacklist hits, high-frequency transfers, high gas usage, and failed contract calls
 - Template-based AI explanation endpoint, ready for future OpenAI/Qwen/DeepSeek provider integration
@@ -154,3 +154,11 @@ Current test coverage includes:
 ## Notes
 
 The default indexer mode is `mock`, so the application can run without a real RPC endpoint. Set `chainlens.indexer.mode=rpc` and configure RPC URLs in `application.yml` to enable Web3j-backed syncing.
+
+In RPC mode, ChainLens fetches each block with full transactions, then loads transaction receipts to parse:
+
+- native token transfers from transaction `value`
+- ERC20 transfers from receipt logs whose `topic0` matches `Transfer(address,address,uint256)`
+- receipt `status`, `gasUsed`, token contract address, and log index
+
+Native transfer rows use `logIndex = -1` to avoid colliding with ERC20 log rows from the same transaction.
