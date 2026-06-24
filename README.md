@@ -1,5 +1,7 @@
 # ChainLens Web3 Backend
 
+[![CI](https://github.com/yiguangchao/chainlens-web3-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/yiguangchao/chainlens-web3-backend/actions/workflows/ci.yml)
+
 ChainLens is a Java 17 + Spring Boot 3 Web3 backend MVP for wallet address management, blockchain transaction indexing, ERC20 transfer parsing, risk assessment, and template-based AI transaction explanations.
 
 It is designed as a GitHub portfolio project for Web3 Backend Engineer, Wallet Backend Engineer, Exchange Backend Engineer, and Crypto Payment Backend Engineer roles.
@@ -143,6 +145,8 @@ Seed data includes 3 wallet addresses, 3 chain configs, 5 blacklist addresses, a
 ```bash
 mvn test
 ```
+
+GitHub Actions runs the same Maven test suite on every push and pull request to `main`.
 
 Current test coverage includes:
 
