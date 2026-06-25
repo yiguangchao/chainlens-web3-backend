@@ -166,3 +166,7 @@ In RPC mode, ChainLens fetches each block with full transactions, then loads tra
 - receipt `status`, `gasUsed`, token contract address, and log index
 
 Native transfer rows use `logIndex = -1` to avoid colliding with ERC20 log rows from the same transaction.
+
+## License
+
+This project is for learning, portfolio demonstration, and Web3 backend engineering practice.
