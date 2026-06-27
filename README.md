@@ -163,6 +163,7 @@ In RPC mode, ChainLens fetches each block with full transactions, then loads tra
 
 - native token transfers from transaction `value`
 - ERC20 transfers from receipt logs whose `topic0` matches `Transfer(address,address,uint256)`
+
 - receipt `status`, `gasUsed`, token contract address, and log index
 
 Native transfer rows use `logIndex = -1` to avoid colliding with ERC20 log rows from the same transaction.
